@@ -3,64 +3,59 @@
 #include<Windows.h>
 #include<ctime>
 
+#include "draw_airplanes.h"
+
+
 #pragma warning(disable:4996)
-void enemyflow(char ** matrix, int lines, int columns) {
+
+void drawstart321(char ** matrix) {
+	// somehow print to the screen the number 3 2 1 and then go on the matrix
+	for (int i = 3; i >= 0; i--)
+		if (i == 0) {
+			printf("GO ... GO ... GO\n");
+			Sleep(1000);
+		}
+		else {
+			system("cls");
+			printf("%d\n", i);
+			Sleep(1000);
+			system("cls");
+		}
+}
+void enemyflowandfireflow(char ** matrix, int lines, int columns) {
+	// enemy forwarding
 	for(int i = lines - 1; i >= 1; i--)
-		for(int j = columns - 1; j >= 0; j--)
+		for (int j = columns - 1; j >= 0; j--) {
 			if (matrix[i - 1][j] == 2) {
 				matrix[i][j] = 2;
 				matrix[i - 1][j] = 0;
 			}
+		}
+	// fire forwarding
+	for (int i = 0; i < lines - 2; i++) {
+		for(int j = 0; j < columns - 1; j++)
+			if (matrix[i][j] == '*' && i >= 1) {
+				matrix[i - 1][j] = '*';
+				matrix[i][j] = ' ';
+			}
+	}
 }
-void draw_airplane(char ** matrix, int x, int y) {
-	matrix[x - 1][y] = 1;
-	matrix[x][y] = 1;
-	matrix[x + 1][y] = 1;
-	matrix[x + 2][y] = 1;
-	matrix[x][y - 1] = 1;
-	matrix[x][y + 1] = 1;
-	matrix[x + 2][y - 1] = 1;
-	matrix[x + 2][y + 1] = 1;
+void colisionfirewithenemy(char ** matrix, int lines, int columns) {
+	for (int i = 2; i < lines - 5; i++) {
+		for (int j = 0; j < columns - 1; j++) {
+			if (matrix[i][j] == 2 && matrix[i + 1][j] == '*') {
+				matrix[i][j] = ' ';
+				matrix[i + 1][j] = ' ';
+			}
+		}
+	}
 }
-void draw_airplane_left(char ** matrix, int x, int y) {
-	draw_airplane(matrix, x, y);
-
-	matrix[x - 1][y + 1] = ' ';
-	matrix[x][y + 2] = ' ';
-	matrix[x + 1][y + 1] = ' ';
-	matrix[x + 2][y + 2] = ' ';
-
+bool colisionwitheairplane(char ** matrix, int x, int y) {
+	if (matrix[x - 2][y] == 2 || matrix[x - 1][y - 1] == 2 || matrix[x - 1][y + 1] == 2)
+		return true;
+	return false;
 }
-void draw_airplane_right(char ** matrix, int x, int y) {
-	draw_airplane(matrix, x, y);
 
-	matrix[x - 1][y - 1] = ' ';
-	matrix[x][y - 2] = ' ';
-	matrix[x + 1][y - 1] = ' ';
-	matrix[x + 2][y - 2] = ' ';
-
-}
-void draw_airplane_up(char ** matrix, int x, int y) {
-	draw_airplane(matrix, x, y);
-
-	matrix[x + 1][y - 1] = ' ';
-	matrix[x + 1][y + 1] = ' ';
-	matrix[x + 3][y - 1] = ' ';
-	matrix[x + 3][y] = ' ';
-	matrix[x + 3][y + 1] = ' ';
-}
-void draw_airplane_down(char ** matrix, int x, int y) {
-	draw_airplane(matrix, x, y);
-
-	matrix[x - 2][y] = ' ';
-	matrix[x - 1][y - 1] = ' ';
-	matrix[x - 1][y + 1] = ' ';
-	matrix[x + 1][y - 1] = ' ';
-	matrix[x + 1][y + 1] = ' ';
-}
-void shootflow(char ** matrix, int lines, int columns) {
-
-}
 int main() {
 	int n, m; scanf("%d %d", &n, &m);
 	char ** matrix = (char **)malloc(sizeof(char *) * n);
@@ -72,63 +67,96 @@ int main() {
 	system("cls");
 	int poz_x = n / 2;
 	int poz_y = m / 2;
+	int level_airplane = 1;
+	drawstart321(matrix);
+	// implement somekind of menu or ... i don't know
+
 	draw_airplane(matrix, poz_x, poz_y);
 	while (1) {
 		char l = ' ';
 		if(_kbhit())
 			l = getch();
-		//int x = rand() % n;
-		//matrix[0][x] = 2;
+		int x = rand() % n;
+		matrix[0][x] = 2;
 
-		enemyflow(matrix, n, m);
+		enemyflowandfireflow(matrix, n, m);
 		
 		if (GetAsyncKeyState(VK_DOWN)) {
 			matrix[poz_x][poz_y] = 0;
 			if(poz_x <= n - 5)
 				poz_x += 1;
-			//matrix[poz_x][poz_y] = 1;
+
 			draw_airplane_down(matrix, poz_x, poz_y);
-			
 		}
 		if (GetAsyncKeyState(VK_UP)) {
 			matrix[poz_x][poz_y] = 0;
-			if(poz_x >= 2)
+			if(poz_x >= 3)
 				poz_x -= 1;
-			//matrix[poz_x][poz_y] = 1;
+
 			draw_airplane_up(matrix, poz_x, poz_y);
 		}
 		if (GetAsyncKeyState(VK_RIGHT)) {
 			matrix[poz_x][poz_y] = 0;
 			if(poz_y <= m - 3)
 				poz_y += 1;
-			//matrix[poz_x][poz_y] = 1;
+
 			draw_airplane_right(matrix, poz_x, poz_y);
 		}
 		if (GetAsyncKeyState(VK_LEFT)) {
 			matrix[poz_x][poz_y] = 0;
 			if(poz_y >= 2)
 				poz_y -= 1;
-			//matrix[poz_x][poz_y] = 1;
+
 			draw_airplane_left(matrix, poz_x, poz_y);
 		}
-		if (l != 'a' && l != 's' && l != 'd' && l != 'w') {
-			matrix[poz_x][poz_y] = 1;
-		}
-		system("cls");
 
-		for (int i = 0; i < n - 1; i++) {
+		matrix[poz_x][poz_y] = 1;
+		draw_airplane(matrix, poz_x, poz_y);
+
+		colisionfirewithenemy(matrix, n, m);
+		system("cls");
+		if (colisionwitheairplane(matrix, poz_x, poz_y) == true) {
+			printf("END GAME");
+			break;
+		}
+		for (int i = 1; i < n - 1; i++) {
 			for (int j = 0; j < m; j++) {
 				if (l == 'a') {
 					matrix[i][j] = 0;
-					printf("%c ", matrix[i][j]);
+					printf("%c", matrix[i][j]);
 				}
 				else
-					printf("%c ", matrix[i][j]);
+					printf("%c", matrix[i][j]);
 			}
 			printf("\n");
 		}
 		if (l == 'q')
 			break;
+		if (l == 'f') {
+			switch (level_airplane) {
+			case 1: {
+				matrix[poz_x - 2][poz_y] = '*';
+				break;
+			}
+			case 2: {
+				matrix[poz_x - 2][poz_y] = '*';
+				matrix[poz_x + 1][poz_y - 2] = '*';
+				matrix[poz_x + 1][poz_y + 2] = '*';
+				break;
+			}
+			case 3: {
+				matrix[poz_x - 2][poz_y] = '*';
+				matrix[poz_x + 1][poz_y - 2] = '*';
+				matrix[poz_x + 1][poz_y + 2] = '*';
+				matrix[poz_x - 1][poz_y - 3] = '*';
+				matrix[poz_x - 1][poz_y + 3] = '*';
+				break;
+			}
+			default:
+				break;
+			}
+		}
+			
 		Sleep(20);
 	}
 	
