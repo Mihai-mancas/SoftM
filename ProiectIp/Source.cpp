@@ -4,7 +4,7 @@
 #include<ctime>
 
 #include "draw_airplanes.h"
-
+#include "menu.h"
 
 #pragma warning(disable:4996)
 
@@ -56,6 +56,7 @@ bool colisionwitheairplane(char ** matrix, int x, int y) {
 	return false;
 }
 
+
 int main() {
 	int n, m; scanf("%d %d", &n, &m);
 	char ** matrix = (char **)malloc(sizeof(char *) * n);
@@ -68,16 +69,39 @@ int main() {
 	int poz_x = n / 2;
 	int poz_y = m / 2;
 	int level_airplane = 1;
+	int index_airplane = -1;
+
+	index_airplane = menu(3, matrix, poz_x, poz_y, n, m);
+	index_airplane;
 	drawstart321(matrix);
 	// implement somekind of menu or ... i don't know
-
-	draw_airplane(matrix, poz_x, poz_y);
-	while (1) {
+	clear_airplane(matrix, poz_x, poz_y);
+	clear_airplane_ip(matrix, poz_x, poz_y);
+	clear_airplane_acso(matrix, poz_x, poz_y);
+	switch (index_airplane) {
+	case 0: {
+		draw_airplane(matrix, poz_x, poz_y);
+		break;
+	}
+	case 1: {
+		draw_airplane_ip(matrix, poz_x, poz_y);
+		break;
+	}
+	case 2: {
+		draw_airplane_acso(matrix, poz_x, poz_y);
+		break;
+	}
+	default:
+		break;
+	}
+	while (true) {
 		char l = ' ';
 		if(_kbhit())
 			l = getch();
-		int x = rand() % n;
-		matrix[0][x] = 2;
+		// implement the powerup
+
+		//int x = rand() % n;
+		//matrix[0][x] = 2;
 
 		enemyflowandfireflow(matrix, n, m);
 		
@@ -85,33 +109,128 @@ int main() {
 			matrix[poz_x][poz_y] = 0;
 			if(poz_x <= n - 5)
 				poz_x += 1;
-
-			draw_airplane_down(matrix, poz_x, poz_y);
+			switch (index_airplane) {
+			case 0: {
+				draw_airplane_down(matrix, poz_x, poz_y);
+				break;
+			}
+			case 1: {
+				draw_airplane_ip_down(matrix, poz_x, poz_y);
+				break;
+			}
+			case 2: {
+				draw_airplane_acso_down(matrix, poz_x, poz_y);
+				break;
+			}
+			default:
+				break;
+			}
 		}
 		if (GetAsyncKeyState(VK_UP)) {
 			matrix[poz_x][poz_y] = 0;
 			if(poz_x >= 3)
 				poz_x -= 1;
-
-			draw_airplane_up(matrix, poz_x, poz_y);
+			switch (index_airplane) {
+			case 0: {
+				draw_airplane_up(matrix, poz_x, poz_y);
+				break;
+			}
+			case 1: {
+				draw_airplane_ip_up(matrix, poz_x, poz_y);
+				break;
+			}
+			case 2: {
+				draw_airplane_acso_up(matrix, poz_x, poz_y);
+				break;
+			}
+			default:
+				break;
+			}
 		}
 		if (GetAsyncKeyState(VK_RIGHT)) {
 			matrix[poz_x][poz_y] = 0;
-			if(poz_y <= m - 3)
-				poz_y += 1;
+			
+			// switch after the type of the plane and then after the level of the airplane
+			switch (level_airplane) {
+			case 1: {
+				if (poz_y <= m - 3)
+					poz_y++;
+				break;
+			}
+			case 2: {
+				if (poz_y <= m - 4)
+					poz_y++;
+				break;
+			}
+			case 3: {
+				if (poz_y <= m - 5)
+					poz_y++;
+				break;
+			}
+			default:
+				break;
+			}
 
-			draw_airplane_right(matrix, poz_x, poz_y);
+			switch (index_airplane) {
+			case 0: {
+				draw_airplane_right(matrix, poz_x, poz_y);
+				break;
+			}
+			case 1: {
+				draw_airplane_ip_right(matrix, poz_x, poz_y);
+				break;
+			}
+			case 2: {
+				draw_airplane_acso_right(matrix, poz_x, poz_y);
+				break;
+			}
+			default:
+				break;
+			}
 		}
 		if (GetAsyncKeyState(VK_LEFT)) {
 			matrix[poz_x][poz_y] = 0;
-			if(poz_y >= 2)
-				poz_y -= 1;
-
-			draw_airplane_left(matrix, poz_x, poz_y);
+			
+			// switch after the type of the airplane and then after the level
+			switch (level_airplane) {
+			case 1: {
+				if (poz_y >= 2)
+					poz_y--;
+				break;
+			}
+			case 2: {
+				if (poz_y >= 3)
+					poz_y--;
+				break;
+			}
+			case 3: {
+				if (poz_y >= 4)
+					poz_y--;
+				break;
+			}
+			default:
+				break;
+			}
+			switch (index_airplane) {
+			case 0: {
+				draw_airplane_left(matrix, poz_x, poz_y);
+				break;
+			}
+			case 1: {
+				draw_airplane_ip_left(matrix, poz_x, poz_y);
+				break;
+			}
+			case 2: {
+				draw_airplane_acso_left(matrix, poz_x, poz_y);
+				break;
+			}
+			default:
+				break;
+			}
 		}
 
-		matrix[poz_x][poz_y] = 1;
-		draw_airplane(matrix, poz_x, poz_y);
+		//matrix[poz_x][poz_y] = 1;
+		//draw_airplane(matrix, poz_x, poz_y);
 
 		colisionfirewithenemy(matrix, n, m);
 		system("cls");
@@ -133,6 +252,8 @@ int main() {
 		if (l == 'q')
 			break;
 		if (l == 'f') {
+			
+			// switch after the type of the airplane and then after the level
 			switch (level_airplane) {
 			case 1: {
 				matrix[poz_x - 2][poz_y] = '*';
