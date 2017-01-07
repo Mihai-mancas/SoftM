@@ -94,14 +94,20 @@ int main() {
 	default:
 		break;
 	}
+	int distance = 0;
+	bool enemyapp = true;
 	while (true) {
 		char l = ' ';
 		if(_kbhit())
 			l = getch();
-		// implement the powerup
 
-		//int x = rand() % n;
-		//matrix[0][x] = 2;
+		if (enemyapp == true) {
+			int x = rand() % n;
+			matrix[0][x] = 2;
+			enemyapp = false;
+		}
+		else
+			enemyapp = true;
 
 		enemyflowandfireflow(matrix, n, m);
 		
@@ -277,7 +283,8 @@ int main() {
 				break;
 			}
 		}
-			
+		distance++;
+		printf("\n\n          Distance = %d\n          Level airplane = %d", distance, level_airplane);
 		Sleep(20);
 	}
 	
