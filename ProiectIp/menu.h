@@ -6,6 +6,20 @@
 #include<ctime>
 
 #pragma warning(disable:4996)
+
+void clearscreen(int x, int y) {
+	COORD p = { x, y };
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), p);
+}
+
+void ShowConsoleCursor() {
+	HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO cursorinfo;
+	GetConsoleCursorInfo(out, &cursorinfo);
+	cursorinfo.bVisible = 0;
+	SetConsoleCursorInfo(out, &cursorinfo);
+}
+
 int menu(int nr_airplanes, char ** matrix, int x, int y, int lines, int columns) {
 	int index = 0;
 	draw_airplane(matrix, x, y);
@@ -32,7 +46,8 @@ int menu(int nr_airplanes, char ** matrix, int x, int y, int lines, int columns)
 				clear_airplane(matrix, x, y);
 				clear_airplane_ip(matrix, x, y);
 				clear_airplane_acso(matrix, x, y);
-				system("cls");
+				//system("cls");
+				clearscreen(0, 0);
 				//clear_airplane(matrix, x, y);
 				draw_airplane(matrix, x, y);
 				for (int i = 0; i < lines; i++) {
@@ -46,7 +61,8 @@ int menu(int nr_airplanes, char ** matrix, int x, int y, int lines, int columns)
 				clear_airplane(matrix, x, y);
 				clear_airplane_ip(matrix, x, y);
 				clear_airplane_acso(matrix, x, y);
-				system("cls");
+				//system("cls");
+				clearscreen(0, 0);
 				//clear_airplane_ip(matrix, x, y);
 				draw_airplane_ip(matrix, x, y);
 				for (int i = 0; i < lines; i++) {
@@ -60,7 +76,8 @@ int menu(int nr_airplanes, char ** matrix, int x, int y, int lines, int columns)
 				clear_airplane(matrix, x, y);
 				clear_airplane_ip(matrix, x, y);
 				clear_airplane_acso(matrix, x, y);
-				system("cls");
+				//system("cls");
+				clearscreen(0, 0);
 				//clear_airplane_acso(matrix, x, y);
 				draw_airplane_acso(matrix, x, y);
 				for (int i = 0; i < lines; i++) {
@@ -83,7 +100,8 @@ int menu(int nr_airplanes, char ** matrix, int x, int y, int lines, int columns)
 				clear_airplane(matrix, x, y);
 				clear_airplane_ip(matrix, x, y);
 				clear_airplane_acso(matrix, x, y);
-				system("cls");
+				//system("cls");
+				clearscreen(0, 0);
 				//clear_airplane(matrix, x, y);
 				draw_airplane(matrix, x, y);
 				for (int i = 0; i < lines; i++) {
@@ -97,7 +115,8 @@ int menu(int nr_airplanes, char ** matrix, int x, int y, int lines, int columns)
 				clear_airplane(matrix, x, y);
 				clear_airplane_ip(matrix, x, y);
 				clear_airplane_acso(matrix, x, y);
-				system("cls");
+				//system("cls");
+				clearscreen(0, 0);
 				//clear_airplane_ip(matrix, x, y);
 				draw_airplane_ip(matrix, x, y);
 				for (int i = 0; i < lines; i++) {
@@ -111,7 +130,8 @@ int menu(int nr_airplanes, char ** matrix, int x, int y, int lines, int columns)
 				clear_airplane(matrix, x, y);
 				clear_airplane_ip(matrix, x, y);
 				clear_airplane_acso(matrix, x, y);
-				system("cls");
+				//system("cls");
+				clearscreen(0, 0);
 				//clear_airplane_acso(matrix, x, y);
 				draw_airplane_acso(matrix, x, y);
 				for (int i = 0; i < lines; i++) {

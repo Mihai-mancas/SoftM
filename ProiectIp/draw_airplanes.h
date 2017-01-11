@@ -1,17 +1,20 @@
 #pragma once
 
 // Standart plane
-
+void setcolor(unsigned short color) {
+	HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hcon, color);
+}
 
 void draw_airplane(char ** matrix, int x, int y) {
-	matrix[x - 1][y] = 1;
-	matrix[x][y] = 1;
-	matrix[x + 1][y] = 1;
-	matrix[x + 2][y] = 1;
-	matrix[x][y - 1] = 1;
-	matrix[x][y + 1] = 1;
-	matrix[x + 2][y - 1] = 1;
-	matrix[x + 2][y + 1] = 1;
+	matrix[x - 1][y] = 186;
+	matrix[x][y] = 206;
+	matrix[x + 1][y] = 186;
+	matrix[x + 2][y] = 202;
+	matrix[x][y - 1] = 205;
+	matrix[x][y + 1] = 205;
+	matrix[x + 2][y - 1] = 205;
+	matrix[x + 2][y + 1] = 205;
 }
 void draw_airplane_left(char ** matrix, int x, int y) {
 	draw_airplane(matrix, x, y);
@@ -103,8 +106,8 @@ void draw_airplane_defensive_right(char ** matrix, int x, int y) {
 
 void draw_airplane_power2(char ** matrix, int x, int y) {
 	draw_airplane(matrix, x, y);
-	matrix[x - 1][y - 2] = 1;
-	matrix[x - 1][y + 2] = 1;
+	matrix[x - 1][y - 2] = 186;
+	matrix[x - 1][y + 2] = 186;
 }
 void draw_airplane_power2_up(char ** matrix, int x, int y) {
 	draw_airplane_power2(matrix, x, y);
@@ -154,8 +157,8 @@ void draw_airplane_power2_right(char ** matrix, int x, int y) {
 
 void draw_airplane_power3(char ** matrix, int x, int y) {
 	draw_airplane_power2(matrix, x, y);
-	matrix[x + 1][y - 3] = 1;
-	matrix[x + 1][y + 3] = 1;
+	matrix[x + 1][y - 3] = 186;
+	matrix[x + 1][y + 3] = 186;
 }
 void clear_airplane_power3(char ** matrix, int x, int y) {
 	matrix[x - 1][y - 2] = ' ';
@@ -213,12 +216,12 @@ void draw_airplane_offensive(char ** matrix, int x, int y, int power) {
 
 
 void draw_airplane_ip(char ** matrix, int x, int y) {
-	matrix[x - 1][y] = 1;
-	matrix[x][y] = 1;
-	matrix[x + 1][y - 1] = 1;
-	matrix[x + 1][y] = 1;
-	matrix[x + 1][y + 1] = 1;
-	matrix[x + 2][y] = 1;
+	matrix[x - 1][y] = 186;
+	matrix[x][y] = 186;
+	matrix[x + 1][y - 1] = 205;
+	matrix[x + 1][y] = 186;
+	matrix[x + 1][y + 1] = 205;
+	matrix[x + 2][y] = 186;
 }
 void draw_airplane_ip_up(char ** matrix, int x, int y) {
 	draw_airplane_ip(matrix, x, y);
@@ -259,19 +262,20 @@ void clear_airplane_ip(char ** matrix, int x, int y) {
 	matrix[x + 2][y] = ' ';
 }
 
+
 //--------------------------------------------------------------------------------
 
 // ACSO plane
 
 void draw_airplane_acso(char ** matrix, int x, int y) {
-	matrix[x - 1][y] = 1;
-	matrix[x][y - 1] = 1;
-	matrix[x][y + 1] = 1;
-	matrix[x + 1][y - 1] = 1;
-	matrix[x + 1][y + 1] = 1;
-	matrix[x + 2][y - 1] = 1;
-	matrix[x + 2][y] = 1;
-	matrix[x + 2][y + 1] = 1;
+	matrix[x - 1][y] = 186;
+	matrix[x][y - 1] = 201;
+	matrix[x][y + 1] = 187;
+	matrix[x + 1][y - 1] = 186;
+	matrix[x + 1][y + 1] = 186;
+	matrix[x + 2][y - 1] = 188;
+	matrix[x + 2][y] = 205;
+	matrix[x + 2][y + 1] = 200;
 }
 void draw_airplane_acso_up(char ** matrix, int x, int y) {
 	draw_airplane_acso(matrix, x, y);
@@ -320,6 +324,8 @@ void clear_airplane_acso(char ** matrix, int x, int y) {
 	matrix[x + 2][y] = ' ';
 	matrix[x + 2][y + 1] = ' ';
 }
+
+
 //--------------------------------------------------------------------------------
 
 // SD plane
