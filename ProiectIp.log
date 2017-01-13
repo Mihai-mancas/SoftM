@@ -1,0 +1,31 @@
+﻿  Source.cpp
+c:\users\dell\documents\visual studio 2015\projects\proiectip\proiectip\draw_airplanes.h(10): warning C4309: '=': truncation of constant value
+c:\users\dell\documents\visual studio 2015\projects\proiectip\proiectip\draw_airplanes.h(11): warning C4309: '=': truncation of constant value
+c:\users\dell\documents\visual studio 2015\projects\proiectip\proiectip\draw_airplanes.h(12): warning C4309: '=': truncation of constant value
+c:\users\dell\documents\visual studio 2015\projects\proiectip\proiectip\draw_airplanes.h(13): warning C4309: '=': truncation of constant value
+c:\users\dell\documents\visual studio 2015\projects\proiectip\proiectip\draw_airplanes.h(14): warning C4309: '=': truncation of constant value
+c:\users\dell\documents\visual studio 2015\projects\proiectip\proiectip\draw_airplanes.h(15): warning C4309: '=': truncation of constant value
+c:\users\dell\documents\visual studio 2015\projects\proiectip\proiectip\draw_airplanes.h(16): warning C4309: '=': truncation of constant value
+c:\users\dell\documents\visual studio 2015\projects\proiectip\proiectip\draw_airplanes.h(17): warning C4309: '=': truncation of constant value
+c:\users\dell\documents\visual studio 2015\projects\proiectip\proiectip\draw_airplanes.h(109): warning C4309: '=': truncation of constant value
+c:\users\dell\documents\visual studio 2015\projects\proiectip\proiectip\draw_airplanes.h(110): warning C4309: '=': truncation of constant value
+c:\users\dell\documents\visual studio 2015\projects\proiectip\proiectip\draw_airplanes.h(160): warning C4309: '=': truncation of constant value
+c:\users\dell\documents\visual studio 2015\projects\proiectip\proiectip\draw_airplanes.h(161): warning C4309: '=': truncation of constant value
+c:\users\dell\documents\visual studio 2015\projects\proiectip\proiectip\draw_airplanes.h(219): warning C4309: '=': truncation of constant value
+c:\users\dell\documents\visual studio 2015\projects\proiectip\proiectip\draw_airplanes.h(220): warning C4309: '=': truncation of constant value
+c:\users\dell\documents\visual studio 2015\projects\proiectip\proiectip\draw_airplanes.h(221): warning C4309: '=': truncation of constant value
+c:\users\dell\documents\visual studio 2015\projects\proiectip\proiectip\draw_airplanes.h(222): warning C4309: '=': truncation of constant value
+c:\users\dell\documents\visual studio 2015\projects\proiectip\proiectip\draw_airplanes.h(223): warning C4309: '=': truncation of constant value
+c:\users\dell\documents\visual studio 2015\projects\proiectip\proiectip\draw_airplanes.h(224): warning C4309: '=': truncation of constant value
+c:\users\dell\documents\visual studio 2015\projects\proiectip\proiectip\draw_airplanes.h(271): warning C4309: '=': truncation of constant value
+c:\users\dell\documents\visual studio 2015\projects\proiectip\proiectip\draw_airplanes.h(272): warning C4309: '=': truncation of constant value
+c:\users\dell\documents\visual studio 2015\projects\proiectip\proiectip\draw_airplanes.h(273): warning C4309: '=': truncation of constant value
+c:\users\dell\documents\visual studio 2015\projects\proiectip\proiectip\draw_airplanes.h(274): warning C4309: '=': truncation of constant value
+c:\users\dell\documents\visual studio 2015\projects\proiectip\proiectip\draw_airplanes.h(275): warning C4309: '=': truncation of constant value
+c:\users\dell\documents\visual studio 2015\projects\proiectip\proiectip\draw_airplanes.h(276): warning C4309: '=': truncation of constant value
+c:\users\dell\documents\visual studio 2015\projects\proiectip\proiectip\draw_airplanes.h(277): warning C4309: '=': truncation of constant value
+c:\users\dell\documents\visual studio 2015\projects\proiectip\proiectip\draw_airplanes.h(278): warning C4309: '=': truncation of constant value
+c:\users\dell\documents\visual studio 2015\projects\proiectip\proiectip\menu.h(11): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
+c:\users\dell\documents\visual studio 2015\projects\proiectip\proiectip\score_table.h(16): warning C4477: 'fscanf' : format string '%d' requires an argument of type 'int *', but variadic argument 2 has type 'int'
+  ProiectIp.vcxproj -> C:\Users\Dell\documents\visual studio 2015\Projects\ProiectIp\Debug\ProiectIp.exe
+  ProiectIp.vcxproj -> C:\Users\Dell\documents\visual studio 2015\Projects\ProiectIp\Debug\ProiectIp.pdb (Full PDB)
