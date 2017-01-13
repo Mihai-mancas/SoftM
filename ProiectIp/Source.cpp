@@ -14,20 +14,7 @@
 #define HEIGHT 55  // lines
 #define WIDTH 75   // columns
 
-/*
-void clearscreen(int x, int y) {
-	COORD p = { x, y };
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), p);
-}
 
-void ShowConsoleCursor() {
-	HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
-	CONSOLE_CURSOR_INFO cursorinfo;
-	GetConsoleCursorInfo(out, &cursorinfo);
-	cursorinfo.bVisible = 0;
-	SetConsoleCursorInfo(out, &cursorinfo);
-}
-*/
 
 void drawstart321(char ** matrix) {
 	// somehow print to the screen the number 3 2 1 and then go on the matrix
@@ -43,12 +30,7 @@ void drawstart321(char ** matrix) {
 			system("cls");
 		}
 }
-/*
-void setcolor(unsigned short color) {
-	HANDLE hcon = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleTextAttribute(hcon, color);
-}
-*/
+
 void enemyflowandfireflow(char ** matrix, int lines, int columns) {
 	// enemy forwarding
 	for(int i = lines - 1; i >= 1; i--)
@@ -392,10 +374,12 @@ int main() {
 	int index_airplane = -1;
 
 
-
+	// menu
 
 menu:
 	printf("\n\n\n     1 - Play\n     2 - Instructions\n     3 - Score board\n     4 - Exit\n");
+	printf("\n\n\n     Select a option\n");
+	ShowConsoleCursor();
 	char l = getch();
 	
 	switch (l) {
@@ -427,24 +411,32 @@ menu:
 	}
 	char letter;
 scoreb:
+	ShowConsoleCursor();
 	print_score_board();
+	printf("\nPress b for back ...");
 	letter = getch();
 	if (letter == 'b') {
 		system("cls");
 		goto menu;
 	}
-	Sleep(5000);
+	//Sleep(5000);
 inst:
+	ShowConsoleCursor();
 	printf("\n     f - fire\n     arrow key - move the airplane\n     a - kill all enemy\n");
+	printf("\nPress b for back ...");
 	letter = getch();
 	if (letter == 'b') {
 		system("cls");
 		goto menu;
 	}
-	Sleep(5000);
+	//Sleep(5000);
 
 
 start:
+
+	// end menu
+
+
 	system("cls");
 	index_airplane = menu(3, matrix, poz_x, poz_y, HEIGHT, WIDTH);
 	
@@ -457,40 +449,57 @@ start:
 	clear_airplane_ip(matrix, poz_x, poz_y);
 	clear_airplane_acso(matrix, poz_x, poz_y);
 
-	/*switch (index_airplane) {
-	case 0: {
-		draw_airplane(matrix, poz_x, poz_y);
-		break;
-	}
-	case 1: {
-		draw_airplane_ip(matrix, poz_x, poz_y);
-		break;
-	}
-	case 2: {
-		draw_airplane_acso(matrix, poz_x, poz_y);
-		break;
-	}
-	default:
-		break;
-	}*/
-
 	selectrightairplane(index_airplane, level_airplane, matrix, poz_x, poz_y);
+
+	int first_power_up = rand() % 1000;
+	first_power_up = 100;
+	int time_power_up = 0;
 
 	int distance = 0;
 	bool enemyapp = true;
+
+
+
 	while (true) {
 		char l = ' ';
 		if (_kbhit())
 			l = getch();
 
+		int px, py;
 		if (enemyapp == true) {
 			int x = rand() % HEIGHT;
-			//setcolor(5);
 			matrix[0][x] = 2;
 			enemyapp = false;
 		}
 		else
 			enemyapp = true;
+
+		// level up
+		if (distance == first_power_up) {
+			px = rand() % WIDTH;
+			py = rand() % HEIGHT;
+			matrix[px][py] = 5;
+			time_power_up = HEIGHT - 5;
+		}
+		if (distance > first_power_up && time_power_up == 0)
+			first_power_up += rand() % first_power_up + 1000;
+		time_power_up--;
+
+		if (time_power_up > 0) {
+			if (matrix[px + 1][py] == '*' && matrix[px][py] == 5) {
+				matrix[px][py] = ' ';
+				matrix[px + 1][py] = ' ';
+				switch (index_airplane) {
+				case 0: {
+					if (level_airplane < 2)
+						level_airplane++;
+					break;
+				}
+				default:
+					break;
+				}
+			}
+		}
 
 		enemyflowandfireflow(matrix, HEIGHT, WIDTH);
 
@@ -498,46 +507,12 @@ start:
 			matrix[poz_x][poz_y] = 0;
 			if (poz_x <= HEIGHT - 5)
 				poz_x += 1;
-			/*switch (index_airplane) {
-			case 0: {
-				draw_airplane_down(matrix, poz_x, poz_y);
-				break;
-			}
-			case 1: {
-				draw_airplane_ip_down(matrix, poz_x, poz_y);
-				break;
-			}
-			case 2: {
-				draw_airplane_acso_down(matrix, poz_x, poz_y);
-				break;
-			}
-			default:
-				break;
-			}*/
-
 			draw_right_airplane_down(index_airplane, level_airplane, matrix, poz_x, poz_y);
 		}
 		if (GetAsyncKeyState(VK_UP)) {
 			matrix[poz_x][poz_y] = 0;
 			if (poz_x >= 3)
 				poz_x -= 1;
-			/*switch (index_airplane) {
-			case 0: {
-				draw_airplane_up(matrix, poz_x, poz_y);
-				break;
-			}
-			case 1: {
-				draw_airplane_ip_up(matrix, poz_x, poz_y);
-				break;
-			}
-			case 2: {
-				draw_airplane_acso_up(matrix, poz_x, poz_y);
-				break;
-			}
-			default:
-				break;
-			}*/
-
 			draw_right_airplane_up(index_airplane, level_airplane, matrix, poz_x, poz_y);
 		}
 		if (GetAsyncKeyState(VK_RIGHT)) {
@@ -563,24 +538,6 @@ start:
 			default:
 				break;
 			}
-
-			/*switch (index_airplane) {
-			case 0: {
-				draw_airplane_right(matrix, poz_x, poz_y);
-				break;
-			}
-			case 1: {
-				draw_airplane_ip_right(matrix, poz_x, poz_y);
-				break;
-			}
-			case 2: {
-				draw_airplane_acso_right(matrix, poz_x, poz_y);
-				break;
-			}
-			default:
-				break;
-			}*/
-
 			draw_right_airplane_right(index_airplane, level_airplane, matrix, poz_x, poz_y);
 		}
 		if (GetAsyncKeyState(VK_LEFT)) {
@@ -606,23 +563,6 @@ start:
 			default:
 				break;
 			}
-			/*switch (index_airplane) {
-			case 0: {
-				draw_airplane_left(matrix, poz_x, poz_y);
-				break;
-			}
-			case 1: {
-				draw_airplane_ip_left(matrix, poz_x, poz_y);
-				break;
-			}
-			case 2: {
-				draw_airplane_acso_left(matrix, poz_x, poz_y);
-				break;
-			}
-			default:
-				break;
-			}*/
-
 			draw_right_airplane_left(index_airplane, level_airplane, matrix, poz_x, poz_y);
 		}
 
@@ -634,33 +574,11 @@ start:
 			break;
 		}
 		if (l == 'f') {
-
-			// switch after the type of the airplane and then after the level
-			/*switch (level_airplane) {
-			case 0: {
-			matrix[poz_x - 2][poz_y] = '*';
-			break;
-			}
-			case 1: {
-			matrix[poz_x - 2][poz_y] = '*';
-			matrix[poz_x - 2][poz_y - 2] = '*';
-			matrix[poz_x - 2][poz_y + 2] = '*';
-			break;
-			}
-			case 2: {
-			matrix[poz_x - 2][poz_y] = '*';
-			matrix[poz_x - 2][poz_y - 2] = '*';
-			matrix[poz_x - 2][poz_y + 2] = '*';
-			matrix[poz_x][poz_y - 3] = '*';
-			matrix[poz_x][poz_y + 3] = '*';
-			break;
-			}
-			default:
-			break;
-			}
-			*/
 			draw_fire(index_airplane, level_airplane, matrix, poz_x, poz_y);
 		}
+
+		
+
 		for (int i = 1; i < HEIGHT - 1; i++) {
 			for (int j = 0; j < WIDTH; j++) {
 				if (l == 'a') {
@@ -669,7 +587,7 @@ start:
 				}
 				else {
 					if (matrix[i][j] == 2) {
-						SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 3);
+						SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x0C);
 						printf("%c", matrix[i][j]);
 						SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x07);
 					}

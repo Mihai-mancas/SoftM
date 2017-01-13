@@ -152,7 +152,6 @@
     <ClInclude Include="draw_airplanes.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="score_table.h" />
-    <ClInclude Include="start_menu.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="TextFile.txt" />
